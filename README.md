@@ -7,4 +7,4 @@ Yleisiä linkkejä:
 
 ## Työn aihe
 
-Myyntipaikka jossa asikkaat voivat myydä ja ostaa tuotteita toisiltaan. 
+Myynti sivusto jossa asiakkaat voivat myydä ja ostaa tuotteita toisiltaan. 
