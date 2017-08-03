@@ -8,12 +8,12 @@ Yleisiä linkkejä:
 Linkit toteutetuille sivuille:
 
 * [Etusivu](http://vavo.users.cs.helsinki.fi/tsoha/)
-* [Kirjautumis sivu](http://vavo.users.cs.helsinki.fi/tsoha/login)
+* [Kirjautumissivu](http://vavo.users.cs.helsinki.fi/tsoha/login)
 * [Omat profiilin tiedot](http://vavo.users.cs.helsinki.fi/tsoha/profile)
-* [Tuotteiden listaus sivu](http://vavo.users.cs.helsinki.fi/tsoha/item_list)
-* [Tuotteiden lisäys sivu](http://vavo.users.cs.helsinki.fi/tsoha/add_item)
-* [Tuotteiden muokkaus sivu](http://vavo.users.cs.helsinki.fi/tsoha/edit_item)
-* [Yhden tuotteen tietojen katsomis sivu](http://vavo.users.cs.helsinki.fi/tsoha/item_info)
+* [Tuotteiden listaussivu](http://vavo.users.cs.helsinki.fi/tsoha/item_list)
+* [Tuotteiden lisäyssivu](http://vavo.users.cs.helsinki.fi/tsoha/add_item)
+* [Tuotteiden muokkaussivu](http://vavo.users.cs.helsinki.fi/tsoha/edit_item)
+* [Yhden tuotteen tietojen katsomissivu](http://vavo.users.cs.helsinki.fi/tsoha/item_info)
 
 
 ## Työn aihe
