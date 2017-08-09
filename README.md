@@ -10,8 +10,8 @@ Linkit toteutetuille sivuille:
 * [Etusivu](http://vavo.users.cs.helsinki.fi/tsoha/)
 * [Kirjautumissivu](http://vavo.users.cs.helsinki.fi/tsoha/login)
 * [Omat profiilin tiedot](http://vavo.users.cs.helsinki.fi/tsoha/profile)
-* [Tuotteiden listaussivu](http://vavo.users.cs.helsinki.fi/tsoha/item_list)
-* [Tuotteiden lisäyssivu](http://vavo.users.cs.helsinki.fi/tsoha/add_item)
+* [Tuotteiden listaussivu](http://vavo.users.cs.helsinki.fi/tsoha/tuotteet)
+* [Tuotteiden lisäyssivu](http://vavo.users.cs.helsinki.fi/tsoha/tuote/uusi)
 * [Tuotteiden muokkaussivu](http://vavo.users.cs.helsinki.fi/tsoha/edit_item)
 * [Yhden tuotteen tietojen katsomissivu](http://vavo.users.cs.helsinki.fi/tsoha/item_info)
 

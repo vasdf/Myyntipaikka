@@ -46,4 +46,14 @@
   			return $tuote;
   		}
   	}
+
+    public function save(){
+      $query = DB::connection()->prepare('INSERT INTO Tuote (myyjä_id, kuvaus, hinta, lisätietoja, lisäyspäivä) VALUES (:myyjaid, :kuvaus, :hinta, :lisatietoja, :lisayspaiva) RETURNING id');
+
+      $query->execute(array('myyjaid' => $this->myyjä_id, 'kuvaus' => $this->kuvaus, 'hinta' => $this->hinta, 'lisatietoja' => $this->lisätietoja, 'lisayspaiva' => $this->lisäyspäivä));
+
+      $rivi = $query->fetch();
+
+      $this->id = $rivi['id'];
+    }
   }

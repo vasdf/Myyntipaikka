@@ -8,12 +8,17 @@
     TuoteController::lista();
   });
 
-  $routes->get('/tuote/:id', function($id){
-    TuoteController::näytä($id);
+  $routes->get('/tuote/uusi', function() {
+    TuoteController::uusi();
   });
 
+  $routes->post('/tuote', function() {
+    TuoteController::tallenna();
+  });
 
-
+  $routes->get('/tuote/:id', function($id) {
+    TuoteController::näytä($id);
+  });
 
 
 

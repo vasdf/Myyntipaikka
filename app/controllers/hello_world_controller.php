@@ -23,7 +23,7 @@
     }
 
     public static function add_item(){
-      View::make('tuote/add_item.html');
+      View::make('tuote/uusi.html');
     }
 
     public static function item_info(){
