@@ -7,7 +7,7 @@
     }
 
     public static function item_list(){
-      View::make('suunnitelmat/item_list.html');
+      View::make('tuote/lista.html');
     }
 
     public static function login(){
@@ -19,18 +19,22 @@
     }
 
     public static function edit_item(){
-      View::make('suunnitelmat/edit_item.html');
+      View::make('tuote/edit_item.html');
     }
 
     public static function add_item(){
-      View::make('suunnitelmat/add_item.html');
+      View::make('tuote/add_item.html');
     }
 
     public static function item_info(){
-      View::make('suunnitelmat/item_info.html');
+      View::make('tuote/item_info.html');
     }
 
     public static function sandbox(){
-      View::make('helloworld.html');
+      $tuoli = Tuote::find(1);
+      $tuotteet = Tuote::all();
+
+      Kint::dump($tuotteet);
+      Kint::dump($tuoli);
     }
   }

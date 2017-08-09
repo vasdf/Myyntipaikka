@@ -11,7 +11,7 @@ CREATE TABLE Käyttäjä(
 
 CREATE TABLE Tuote(
 	id SERIAL PRIMARY KEY,
-	käyttäjä_id INTEGER REFERENCES Käyttäjä(id),
+	myyjä_id INTEGER REFERENCES Käyttäjä(id),
 	kuvaus varchar(30) NOT NULL,
 	hinta INTEGER NOT NULL,
 	lisätietoja varchar(300),

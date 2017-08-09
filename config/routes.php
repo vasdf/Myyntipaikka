@@ -4,6 +4,25 @@
     HelloWorldController::index();
   });
 
+  $routes->get('/tuotteet', function() {
+    TuoteController::lista();
+  });
+
+  $routes->get('/tuote/:id', function($id){
+    TuoteController::näytä($id);
+  });
+
+
+
+
+
+
+
+
+
+
+
+
   $routes->get('/item_list', function() {
   	HelloWorldController::item_list();
   });
