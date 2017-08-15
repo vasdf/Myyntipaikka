@@ -2,23 +2,25 @@
 
   class Tuote extends BaseModel{
 
-  	public $id, $myyjä_id, $kuvaus, $hinta, $lisätietoja, $lisäyspäivä;
+  	public $id, $myyjä_id, $myyjä_nimi, $kuvaus, $hinta, $lisätietoja, $lisäyspäivä;
 
   	public function __construct($attributes){
   		parent::__construct($attributes);
       $this->validators = array('validate_kuvaus', 'validate_hinta', 'validate_lisätiedot');
   	}
 
-  	public static function all(){
-  		$query = DB::connection()->prepare('SELECT * FROM Tuote');
+  	public static function kaikki(){
+  		$query = DB::connection()->prepare('SELECT t.id, t.myyjä_id, k.nimi, t.kuvaus, t.hinta, t.lisätietoja, t.lisäyspäivä FROM Tuote t INNER JOIN Käyttäjä k ON t.myyjä_id = k.id');
   		$query->execute();
   		$rivit = $query->fetchAll();
   		$tuotteet = array();
 
   		foreach($rivit as $rivi){
+
   			$tuotteet[] = new Tuote(array(
   				'id' => $rivi['id'],
   				'myyjä_id' => $rivi['myyjä_id'],
+          'myyjä_nimi' => $rivi['nimi'],
   				'kuvaus' => $rivi['kuvaus'],
   				'hinta' => $rivi['hinta'],
   				'lisätietoja' => $rivi['lisätietoja'],
@@ -29,7 +31,7 @@
   		return $tuotteet;
   	}
 
-  	public static function find($id){
+  	public static function etsi($id){
   		$query = DB::connection()->prepare('SELECT * FROM Tuote WHERE id = :id LIMIT 1');
   		$query->execute(array('id' => $id));
   		$rivi = $query->fetch();
@@ -46,6 +48,8 @@
 
   			return $tuote;
   		}
+
+      return null;
   	}
 
     public function save(){

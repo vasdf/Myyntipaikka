@@ -5,6 +5,12 @@
     <h1>Tervetuloa Myyntipaikkaan!</h1>
   </div>
 
+  {% if message %}
+  	<div class="alert alert-success">
+        <lil>{{message}}</lil>
+    </div>
+  {% endif %}
+
   <p>
   	<a href="login" class="btn btn-primary">Kirjaudu sisään</a> <a href="#" class="btn btn-default">Rekisteröidy</a>
   </p>

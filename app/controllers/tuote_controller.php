@@ -3,15 +3,17 @@
   class TuoteController extends BaseController{
 
   	public static function lista(){
-  		$tuotteet = Tuote::all();
+  		$tuotteet = Tuote::kaikki();
 
   		View::make('tuote/lista.html', array('tuotteet' => $tuotteet));	
   	}
 
   	public static function näytä($id){
-  		$tuote = Tuote::find($id);
+  		$tuote = Tuote::etsi($id);
 
-  		View::make('tuote/tiedot.html', array('tuote'  => $tuote));
+      $myyjä = Käyttäjä::etsi($tuote->myyjä_id);
+
+  		View::make('tuote/tiedot.html', array('tuote'  => $tuote, 'myyjä' => $myyjä));
   	}
 
     public static function uusi() {
@@ -46,4 +48,21 @@
         View::make('tuote/uusi.html', array('errors' => $errors, 'attributes' => $attributes));  
       }
     }
+
+    public static function muokkaa($id){
+      $tuote = Tuote::find($id);
+
+      View::make('tuote/muokkaa.html', array('attributes' => $tuote));
+    }
+
+    // public static function päivitä($id){
+    //   $tiedot = $_POST;
+
+    //   $attributes = array(
+    //       'id' => $id,
+    //       'kuvaus' => $tiedot['kuvaus'],
+    //       'hinta' => $tiedot['hintapyyntö'],
+    //       'lisätietoja' => $tiedot['lisätietoja']
+    //     );
+    //}
   }

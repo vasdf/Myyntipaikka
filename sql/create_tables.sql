@@ -5,7 +5,7 @@ CREATE TABLE Käyttäjä(
 	nimi varchar(30) NOT NULL,
 	puh varchar(15) NOT NULL,
 	sähköposti varchar(50) NOT NULL,
-	liittymispvm DATE,
+	liittymispvm DATE DEFAULT CURRENT_DATE,
 	salasana varchar(40) NOT NULL
 );
 
@@ -15,7 +15,7 @@ CREATE TABLE Tuote(
 	kuvaus varchar(30) NOT NULL,
 	hinta DECIMAL(20,2) NOT NULL,
 	lisätietoja varchar(300),
-	lisäyspäivä DATE
+	lisäyspäivä DATE DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE Sopimus(

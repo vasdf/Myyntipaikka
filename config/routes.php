@@ -1,14 +1,18 @@
 <?php
+  
+  function onko_kirjautunut(){
+    BaseController::check_logged_in();
+  }
 
   $routes->get('/', function() {
     HelloWorldController::index();
   });
 
-  $routes->get('/tuotteet', function() {
+  $routes->get('/tuotteet', 'onko_kirjautunut', function() {
     TuoteController::lista();
   });
 
-  $routes->get('/tuote/uusi', function() {
+  $routes->get('/tuote/uusi', 'onko_kirjautunut', function() {
     TuoteController::uusi();
   });
 
@@ -16,8 +20,20 @@
     TuoteController::tallenna();
   });
 
-  $routes->get('/tuote/:id', function($id) {
+  $routes->get('/tuote/:id', 'onko_kirjautunut', function($id) {
     TuoteController::näytä($id);
+  });
+
+  $routes->get('/tuote/:id/muokkaa', 'onko_kirjautunut', function($id){
+    TuoteController::muokkaa($id);
+  });
+
+  $routes->get('/kirjaudu', function() {
+    KäyttäjäController::kirjaudu();
+  });
+
+  $routes->post('/kirjaudu', function() {
+    KäyttäjäController::käsittele_kirjautuminen();
   });
 
 

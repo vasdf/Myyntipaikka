@@ -1,7 +1,7 @@
 -- Lisää INSERT INTO lauseet tähän tiedostoon
 
-INSERT INTO Käyttäjä (nimi, puh, sähköposti, liittymispvm, salasana) VALUES ('Matti', '1234567', 'asdf@asdf', '2017-08-02' , 'salis1234');
-INSERT INTO Käyttäjä (nimi, puh, sähköposti, liittymispvm, salasana) VALUES ('Pekka', '7654321', 'qwer@qwer', '2017-08-01' , 'silas4321');
+INSERT INTO Käyttäjä (nimi, puh, sähköposti, liittymispvm, salasana) VALUES ('User1', '1234567', 'asdf@asdf', '2017-08-02' , 'salasana1');
+INSERT INTO Käyttäjä (nimi, puh, sähköposti, salasana) VALUES ('User2', '7654321', 'qwer@qwer', 'salasana2');
 
 
 
