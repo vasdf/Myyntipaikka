@@ -2,20 +2,30 @@
 {% block content %}
   <h1>Lisää uusi tuote tuotevalikoimaan:</h1>
 
+  {% if errors %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for error in errors %}
+          <lil>{{error}}</lil>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
   <form method="post" action="{{base_path}}/tuote">
     <div class="form-group">
       <label>Tuote</label>
-      <input type="text" name="kuvaus" class="form-control">
+      <input type="text" name="kuvaus" class="form-control" value="{{attributes.kuvaus}}">
     </div>
     
     <div class="form-group">
       <label>Hintapyyntö</label>
-      <input type="text" name="hintapyyntö" class="form-control">
+      <input type="text" name="hintapyyntö" class="form-control" value="{{attributes.hinta}}">
     </div>
 
     <div class="form-group">
       <label>Lisätietoja</label>
-      <textarea name="lisätietoja" class="form-control"></textarea>
+      <textarea name="lisätietoja" class="form-control">{{attributes.lisätietoja}}</textarea>
     </div>
 
     <div class="form-group">

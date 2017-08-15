@@ -2,7 +2,7 @@
 
 CREATE TABLE Käyttäjä(
 	id SERIAL PRIMARY KEY,
-	nimi varchar(40) NOT NULL,
+	nimi varchar(30) NOT NULL,
 	puh varchar(15) NOT NULL,
 	sähköposti varchar(50) NOT NULL,
 	liittymispvm DATE,
@@ -13,7 +13,7 @@ CREATE TABLE Tuote(
 	id SERIAL PRIMARY KEY,
 	myyjä_id INTEGER REFERENCES Käyttäjä(id),
 	kuvaus varchar(30) NOT NULL,
-	hinta INTEGER NOT NULL,
+	hinta DECIMAL(20,2) NOT NULL,
 	lisätietoja varchar(300),
 	lisäyspäivä DATE
 );

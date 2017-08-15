@@ -29,8 +29,21 @@
         'lisäyspäivä' => '2017-01-02'
       ));
 
-      $tuote->save();
+      $errors = $tuote->errors();
 
-      Redirect::to('/tuote/' . $tuote->id, array('message' => 'Tuote lisätty valikoimaan'));
+      if(count($errors) == 0){
+
+        $tuote->save();
+
+        Redirect::to('/tuote/' . $tuote->id, array('message' => 'Tuote lisätty valikoimaan'));
+      } else {
+        $attributes = array(
+          'kuvaus' => $tiedot['kuvaus'],
+          'hinta' => $tiedot['hintapyyntö'],
+          'lisätietoja' => $tiedot['lisätietoja']
+        );
+
+        View::make('tuote/uusi.html', array('errors' => $errors, 'attributes' => $attributes));  
+      }
     }
   }

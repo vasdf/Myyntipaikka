@@ -31,10 +31,21 @@
     }
 
     public static function sandbox(){
-      $tuoli = Tuote::find(1);
-      $tuotteet = Tuote::all();
 
-      Kint::dump($tuotteet);
-      Kint::dump($tuoli);
+      $tuote = new Tuote(array(
+          'id' => '5',
+          'myyjä_id' => '2',
+          'kuvaus' => 'assssssssssssssssssssssssssssssssssssssssssssadddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd',
+          'hinta' => 'asdfCXZCDASDASDASDAfasdfasfasdas',
+          'lisätietoja' => 'aasddddfsdafsdafasdfasdfasdfasdfasdfasdfasdfasdfasdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff                                                                                                                                                asdasd',
+          'lisäyspäivä' => '2000-01-01'
+        ));
+
+      Kint::dump($tuote);
+      
+      $errors = $tuote->errors();
+
+      Kint::dump($errors);
+
     }
   }
