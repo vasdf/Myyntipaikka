@@ -19,7 +19,6 @@
       <tr>
         <th>Tuote</th>
         <th>Hintapyyntö</th>
-        <th>Myyjä</th>
         <th>Lisäyspäivä</th>
         <th></th>
       </tr>
@@ -32,7 +31,6 @@
         <tr>
           <td><a href="{{base_path}}/tuote/{{tuote.id}}">{{tuote.kuvaus}}</a></td>
           <td>{{tuote.hinta}}</td>
-          <td>{{tuote.myyjä_nimi}}</td>
           <td>{{tuote.lisäyspäivä}}</td>
           
           {% if user_logged_in.id == käyttäjä.id %}
