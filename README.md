@@ -1,7 +1,14 @@
 # Tietokantasovelluksen esittelysivu
 
+Käyttäjä sivustolle:
+
 Käyttäjänimi: User1
 Salasana: salasana1
+
+tai
+
+Käyttäjänimi: User2
+Salasana: salasana2
 
 Yleisiä linkkejä:
 
