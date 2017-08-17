@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+{% import "macros/forms.html" as forms %}
+  <h1>Käyttäjän tiedot:</h1>
+
+  <ul>
+    <li><strong>Nimi: </strong>{{käyttäjä.nimi}}</li>
+    <li><strong>Puhelinnumero: </strong>{{käyttäjä.puh}}</li>
+    <li><strong>Sähköpostiosoite: </strong>{{käyttäjä.sähköposti}}</li>
+    <li><strong>Liittymispäivä: </strong>{{käyttäjä.liittymispvm}}</li>
+  </ul>
+
+  <p>
+    <a href="#" class="btn btn-default">Muokkaa tietojasi</a>
+  </p>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Tuote</th>
+        <th>Hintapyyntö</th>
+        <th>Myyjä</th>
+        <th>Lisäyspäivä</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <h2>Käyttäjän tuotelistaukset:</h2>
+
+    <tbody>
+      {% for tuote in tuotteet %}
+        <tr>
+          <td><a href="{{base_path}}/tuote/{{tuote.id}}">{{tuote.kuvaus}}</a></td>
+          <td>{{tuote.hinta}}</td>
+          <td>{{tuote.myyjä_nimi}}</td>
+          <td>{{tuote.lisäyspäivä}}</td>
+          
+          {% if user_logged_in.id == käyttäjä.id %}
+            <th><a class="btn btn-warning btn-xs" href="{{base_path}}/tuote/{{tuote.id}}/muokkaa">Muokkaa</a> {{forms.poista_painike("#{base_path}/tuote/#{tuote.id}/poista")}}
+          {% else %}
+            <th><a class="btn btn-default btn-sm" href="#">Osta</a></th>
+          {% endif %}
+        </tr>
+      {% endfor %}  
+    </tbody>
+  </table>
+  
+{% endblock %}

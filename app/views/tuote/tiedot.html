@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-  
+{% import "macros/forms.html" as forms %}
+
   {% if message %}
     <div class="alert alert-success">
   	 {{message}}
@@ -24,9 +25,14 @@
       <tr>
         <td>{{tuote.kuvaus}}</td>
         <td>{{tuote.hinta}}</td>
-        <td>{{tuote.myyjä_id}}</td>
+        <td><a href="{{base_path}}/profiili/{{myyjä.id}}">{{myyjä.nimi}}</a></td>
         <td>{{tuote.lisäyspäivä}}</td>
-        <th><a class="btn btn-default btn-sm" href="#">Osta</a></th>
+        
+        {% if user_logged_in.id == myyjä.id %}
+          <th><a class="btn btn-warning btn-xs" href="{{base_path}}/tuote/{{tuote.id}}/muokkaa">Muokkaa</a> {{forms.poista_painike("#{base_path}/tuote/#{tuote.id}/poista")}}
+        {% else %}
+          <th><a class="btn btn-default btn-sm" href="#">Osta</a></th>
+        {% endif %}
       </tr>
     </tbody>
   </table>
@@ -38,6 +44,6 @@
   </p>
 
   <strong>Myyjän yhteystiedot</strong>
-  <p>puh: 1234567</p>
-  <p>sähköposti: asdf@asdf</p>
+  <p>puh: {{myyjä.puh}}</p>
+  <p>sähköposti: {{myyjä.sähköposti}}</p>
 {% endblock %}

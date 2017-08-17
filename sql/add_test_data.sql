@@ -12,7 +12,3 @@ INSERT INTO Tuote (myyjä_id, kuvaus, hinta, lisätietoja, lisäyspäivä) VALUE
 
 
 
-
-
-
-INSERT INTO Sopimus (myyjä_id, ostaja_id, tuote_id) VALUES ('1', '2', '1');

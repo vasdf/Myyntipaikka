@@ -18,9 +18,4 @@ CREATE TABLE Tuote(
 	lisäyspäivä DATE DEFAULT CURRENT_DATE
 );
 
-CREATE TABLE Sopimus(
-	myyjä_id INTEGER REFERENCES Käyttäjä(id),
-	ostaja_id INTEGER REFERENCES Käyttäjä(id),
-	tuote_id INTEGER REFERENCES Tuote(id)
-);
 

@@ -8,6 +8,12 @@
     </div>
   {% endif %}
 
+  {% if message %}
+    <div class="alert alert-success">
+      <lil>{{message}}</lil>
+    </div>
+  {% endif %}
+
   <form method="post" action="{{base_path}}/kirjaudu">
     <div class="form-group">
       <label>Käyttäjätunnus</label>

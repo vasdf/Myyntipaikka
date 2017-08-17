@@ -1,5 +1,8 @@
 # Tietokantasovelluksen esittelysivu
 
+Käyttäjänimi: User1
+Salasana: salasana1
+
 Yleisiä linkkejä:
 
 * [Linkki sovellukseeni](http://vavo.users.cs.helsinki.fi/tsoha/)
@@ -8,12 +11,9 @@ Yleisiä linkkejä:
 Linkit toteutetuille sivuille:
 
 * [Etusivu](http://vavo.users.cs.helsinki.fi/tsoha/)
-* [Kirjautumissivu](http://vavo.users.cs.helsinki.fi/tsoha/login)
-* [Omat profiilin tiedot](http://vavo.users.cs.helsinki.fi/tsoha/profile)
+* [Kirjautumissivu](http://vavo.users.cs.helsinki.fi/tsoha/kirjaudu)
 * [Tuotteiden listaussivu](http://vavo.users.cs.helsinki.fi/tsoha/tuotteet)
 * [Tuotteiden lisäyssivu](http://vavo.users.cs.helsinki.fi/tsoha/tuote/uusi)
-* [Tuotteiden muokkaussivu](http://vavo.users.cs.helsinki.fi/tsoha/edit_item)
-* [Yhden tuotteen tietojen katsomissivu](http://vavo.users.cs.helsinki.fi/tsoha/item_info)
 
 
 ## Työn aihe

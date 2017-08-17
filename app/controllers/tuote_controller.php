@@ -16,6 +16,12 @@
   		View::make('tuote/tiedot.html', array('tuote'  => $tuote, 'myyjä' => $myyjä));
   	}
 
+    public static function käyttäjän_tuotteet($id){
+      $tuotteet = Tuote::käyttäjän_tuotteet($id);
+
+      return $tuotteet;
+    }
+
     public static function uusi() {
       View::make('tuote/uusi.html');
     }
@@ -23,8 +29,9 @@
     public static function tallenna(){
       $tiedot = $_POST;
 
+
       $tuote = new Tuote(array(
-        'myyjä_id' => '1',
+        'myyjä_id' => $_SESSION['käyttäjä'],
         'kuvaus' => $tiedot['kuvaus'],
         'hinta' => $tiedot['hintapyyntö'],
         'lisätietoja' => $tiedot['lisätietoja'], 
@@ -50,19 +57,49 @@
     }
 
     public static function muokkaa($id){
-      $tuote = Tuote::find($id);
+      $myyjä_id = Tuote::etsi_tuotteen_myyjä($id);
+
+      if (!BaseController::check_logged_in_id($myyjä_id)){
+
+        Redirect::to('/', array('error' => 'Et voi muokata muiden tuotteita'));
+      }
+
+
+      $tuote = Tuote::etsi($id);
 
       View::make('tuote/muokkaa.html', array('attributes' => $tuote));
     }
 
-    // public static function päivitä($id){
-    //   $tiedot = $_POST;
+    public static function päivitä($id){
+      //$vanhatuote = Tuote::etsi($id);
 
-    //   $attributes = array(
-    //       'id' => $id,
-    //       'kuvaus' => $tiedot['kuvaus'],
-    //       'hinta' => $tiedot['hintapyyntö'],
-    //       'lisätietoja' => $tiedot['lisätietoja']
-    //     );
-    //}
+      $tiedot = $_POST;
+
+      $attributes = array(
+          'id' => $id,
+          //'myyjä_id' => $vanhatuote->myyjä_id,
+          'kuvaus' => $tiedot['kuvaus'],
+          'hinta' => $tiedot['hinta'],
+          'lisätietoja' => $tiedot['lisätietoja']
+        );
+
+      $tuote = new Tuote($attributes);
+      $errors = $tuote->errors();
+
+      if(count($errors) > 0){
+        View::make('tuote/muokkaa.html', array('errors' => $errors, 'attributes' => $attributes));
+      } else {
+        $tuote->päivitä();
+
+        Redirect::to('/tuote/' . $tuote->id, array('message' => 'Tuotetta muokattu onnistuneesti!'));
+
+      }
+    }
+
+    public static function poista($id){
+      $tuote = new Tuote(array('id' => $id));
+      $tuote->poista();
+
+      Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('message' => 'Tuote poistettu!'));
+    }
   }

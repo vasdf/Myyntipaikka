@@ -28,12 +28,28 @@
     TuoteController::muokkaa($id);
   });
 
+  $routes->post('/tuote/:id/muokkaa', function($id){ 
+    TuoteController::päivitä($id);
+  });
+
   $routes->get('/kirjaudu', function() {
     KäyttäjäController::kirjaudu();
   });
 
   $routes->post('/kirjaudu', function() {
     KäyttäjäController::käsittele_kirjautuminen();
+  });
+
+  $routes->post('/kirjaudu_ulos', function() {
+    KäyttäjäController::kirjaudu_ulos();
+  });
+
+  $routes->get('/profiili/:id', 'onko_kirjautunut', function($id) {
+    KäyttäjäController::näytä($id);
+  });
+
+  $routes->post('/tuote/:id/poista', function($id){
+    TuoteController::poista($id);
   });
 
 
