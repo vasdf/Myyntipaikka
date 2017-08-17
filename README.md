@@ -2,13 +2,13 @@
 
 Käyttäjä sivustolle:
 
-Käyttäjänimi: User1
-Salasana: salasana1
+* Käyttäjänimi: User1
+* Salasana: salasana1
 
 tai
 
-Käyttäjänimi: User2
-Salasana: salasana2
+* Käyttäjänimi: User2
+* Salasana: salasana2
 
 Yleisiä linkkejä:
 
