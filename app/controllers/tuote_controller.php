@@ -35,14 +35,14 @@
         'kuvaus' => $tiedot['kuvaus'],
         'hinta' => $tiedot['hintapyyntö'],
         'lisätietoja' => $tiedot['lisätietoja'], 
-        'lisäyspäivä' => '2017-01-02'
+        'lisäyspäivä' => '2000-01-01'
       ));
 
       $errors = $tuote->errors();
 
       if(count($errors) == 0){
 
-        $tuote->save();
+        $tuote->tallenna();
 
         Redirect::to('/tuote/' . $tuote->id, array('message' => 'Tuote lisätty valikoimaan'));
       } else {

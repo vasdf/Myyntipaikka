@@ -3,8 +3,8 @@
 CREATE TABLE Käyttäjä(
 	id SERIAL PRIMARY KEY,
 	nimi varchar(30) NOT NULL,
-	puh varchar(15) NOT NULL,
-	sähköposti varchar(50) NOT NULL,
+	puh varchar(15),
+	sähköposti varchar(50),
 	liittymispvm DATE DEFAULT CURRENT_DATE,
 	salasana varchar(40) NOT NULL
 );

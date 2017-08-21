@@ -52,6 +52,14 @@
     TuoteController::poista($id);
   });
 
+  $routes->get('/rekisteroidy', function() {
+    KäyttäjäController::rekisteröidy();
+  });
+
+  $routes->post('/kayttaja', function() {
+    KäyttäjäController::tallenna();
+  });
+
 
 
 

@@ -84,7 +84,7 @@
 
     }
 
-    public function save(){
+    public function tallenna(){
       $query = DB::connection()->prepare('INSERT INTO Tuote (myyjä_id, kuvaus, hinta, lisätietoja, lisäyspäivä) VALUES (:myyjaid, :kuvaus, :hinta, :lisatietoja, CURRENT_DATE) RETURNING id');
 
       $hinta = str_replace(',','.', $this->hinta);
