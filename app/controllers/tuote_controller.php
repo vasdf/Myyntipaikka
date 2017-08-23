@@ -2,12 +2,18 @@
 
   class TuoteController extends BaseController{
 
+    /**
+     * Funktio luo näkymän, joka sisältää kaikki tietokannan tuotteet
+     */
   	public static function lista(){
   		$tuotteet = Tuote::kaikki();
 
   		View::make('tuote/lista.html', array('tuotteet' => $tuotteet));	
   	}
 
+    /**
+     * Funktio näyttää yhden tuotteen tietoja näkymässä
+     */
   	public static function näytä($id){
   		$tuote = Tuote::etsi($id);
 
@@ -16,6 +22,9 @@
   		View::make('tuote/tiedot.html', array('tuote'  => $tuote, 'myyjä' => $myyjä));
   	}
 
+    /**
+     * Funktio etsii tietyn käyttäjän tuotteet ja palauttaa ne
+     */
     public static function käyttäjän_tuotteet($id){
       $tuotteet = Tuote::käyttäjän_tuotteet($id);
 
@@ -26,6 +35,10 @@
       View::make('tuote/uusi.html');
     }
 
+    /**
+     * Funktio luo uuden Tuote olion saamista tiedoistaa ja sen attribuuttien arvoista riippuen,
+     * joko kutsuu Tuote luokan tallenna funktiota tai pyytää tietoja uudestaan ilmoittaen virheistä
+     */
     public static function tallenna(){
       $tiedot = $_POST;
 
@@ -55,7 +68,9 @@
         View::make('tuote/uusi.html', array('errors' => $errors, 'attributes' => $attributes));  
       }
     }
-
+    /**
+     * Funktio luo muokkaus näkymän tietylle tuotteelle tarkistaen onko käyttäjällä oikeuksia sen muokkaukselle
+     */
     public static function muokkaa($id){
       $myyjä_id = Tuote::etsi_tuotteen_myyjä($id);
 
@@ -70,14 +85,15 @@
       View::make('tuote/muokkaa.html', array('attributes' => $tuote));
     }
 
+    /**
+     * Funktio luo uuden Tuote olion saamiensa tietojen pohjalta ja sen attribuuttien perusteella
+     * joko kutsuu Tuote luokan päivitä funktiota tai pyytyää tietoja uudestaa ilmoittaen niiden virheistä
+     */
     public static function päivitä($id){
-      //$vanhatuote = Tuote::etsi($id);
-
       $tiedot = $_POST;
 
       $attributes = array(
           'id' => $id,
-          //'myyjä_id' => $vanhatuote->myyjä_id,
           'kuvaus' => $tiedot['kuvaus'],
           'hinta' => $tiedot['hinta'],
           'lisätietoja' => $tiedot['lisätietoja']
@@ -96,6 +112,9 @@
       }
     }
 
+    /**
+     * Funktio kutsuu Tuote luokan funktiota poista halutulle tuotteelle
+     */
     public static function poista($id){
       $tuote = new Tuote(array('id' => $id));
       $tuote->poista();

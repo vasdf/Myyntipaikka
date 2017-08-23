@@ -9,6 +9,9 @@
       $this->validators = array('validate_nimi', 'validate_puhelinnumero', 'validate_sähköposti', 'validate_salasana');
   	}
 
+    /**
+     * Funktio tarkistaa ovatko sen saamat käyttäjätunnus ja salasana tietokannassa
+     */
   	public static function tunnistaudu($käyttäjätunnus, $salasana){
   		$query = DB::connection()->prepare('SELECT * FROM Käyttäjä WHERE nimi = :nimi AND salasana = :salasana LIMIT 1');
   		$query->execute(array('nimi' => $käyttäjätunnus, 'salasana' => $salasana));
@@ -29,6 +32,9 @@
   		}
   	}
 
+    /**
+     * Funktio etsii tietokannasta halutun käyttäjän ja palauttaa sen tiedot
+     */
   	public static function etsi($id){
   		$query = DB::connection()->prepare('SELECT * FROM Käyttäjä WHERE id = :id LIMIT 1');
   		$query->execute(array('id' => $id));
@@ -50,6 +56,9 @@
   		}
   	}
 
+    /**
+     * Funktion tallentaa tietokantaan käyttäjä olion jolle funktiota on kutsuttu
+     */
     public function tallenna(){
       $query = DB::connection()->prepare('INSERT INTO Käyttäjä (nimi, puh, sähköposti, salasana) VALUES (:nimi, :puh, :sahkoposti, :salasana) RETURNING id');
       $query->execute(array('nimi' => $this->nimi, 'puh' => $this->puh, 'sahkoposti' => $this->sähköposti, 'salasana' => $this->salasana));
@@ -59,6 +68,9 @@
       $this->id = $rivi['id'];
     }
 
+    /**
+     * Funktio tarkistaa käyttäjä olion nimen ja palauttaa siinä olevat virheen
+     */
     public function validate_nimi(){
       $errors = array();
 
@@ -75,6 +87,9 @@
       return $errors;
     }
 
+    /**
+     * Funktio tarkistaa käyttäjä olion salasanan ja palauttaa siinä olevat virheet
+     */
     public function validate_salasana(){
       $errors = array();
 
@@ -93,6 +108,9 @@
       return $errors;
     }
 
+    /**
+     * Funktio tarkistaa käyttäjä olion puhelinnumeron ja palauttaa siinä olevat virheet
+     */
     public function validate_puhelinnumero(){
       $errors = array();
 
@@ -103,6 +121,9 @@
       return $errors;
     }
 
+    /**
+     * Funktio tarkistaa käyttäjä olion sähköpostin ja palauttaa siinä olevat virheet
+     */
     public function validate_sähköposti(){
       $errors = array();
 

@@ -9,6 +9,9 @@
       $this->validators = array('validate_kuvaus', 'validate_hinta', 'validate_lisätiedot');
   	}
 
+    /**
+     * Funktio etsii tietokannasta kaikki tuotteen ja palauttaa ne
+     */
   	public static function kaikki(){
   		$query = DB::connection()->prepare('SELECT t.id, t.myyjä_id, k.nimi, t.kuvaus, t.hinta, t.lisätietoja, t.lisäyspäivä FROM Tuote t INNER JOIN Käyttäjä k ON t.myyjä_id = k.id');
   		$query->execute();
@@ -31,6 +34,9 @@
   		return $tuotteet;
   	}
 
+    /**
+     * Funktio etsii tietokannasta halutun tuotteen id:n perusteella ja palauttaa sen
+     */
   	public static function etsi($id){
   		$query = DB::connection()->prepare('SELECT * FROM Tuote WHERE id = :id LIMIT 1');
   		$query->execute(array('id' => $id));
@@ -52,6 +58,10 @@
       return null;
   	}
 
+    /**
+     * Funktio etsii tietokannasta kaikki tietyn käyttäjän tuotteet käyttäjän id:n perusteella
+     * ja palauttaa tuotteet
+     */
     public static function käyttäjän_tuotteet($id){
       $query = DB::connection()->prepare('SELECT * FROM Tuote WHERE myyjä_id = :myyja_id');
       $query->execute(array('myyja_id' => $id));
@@ -73,6 +83,9 @@
       return $tuotteet;
     }
 
+    /**
+     * Funktio etsii halutun tuotteen myyjä_id:n tuotteen id:n perusteella ja palauttaa myyjä_id:n
+     */
     public static function etsi_tuotteen_myyjä($id){
       $query = DB::connection()->prepare('SELECT myyjä_id FROM Tuote WHERE id = :id LIMIT 1');
       $query->execute(array('id' => $id));
@@ -83,7 +96,9 @@
       return $myyjä_id;
 
     }
-
+    /**
+     * Funktio tallentaa Tuote olion, jolle funktiota kutsuttiin, tietokantaan
+     */
     public function tallenna(){
       $query = DB::connection()->prepare('INSERT INTO Tuote (myyjä_id, kuvaus, hinta, lisätietoja, lisäyspäivä) VALUES (:myyjaid, :kuvaus, :hinta, :lisatietoja, CURRENT_DATE) RETURNING id');
 
@@ -98,6 +113,9 @@
       $this->id = $rivi['id'];
     }
 
+    /**
+     * Funktio muokkaa Tuote olion, jolle funktiota kutsuttiin, tietoja tietokannasssa
+     */
     public function päivitä(){
       $query = DB::connection()->prepare('UPDATE Tuote SET kuvaus = :kuvaus, hinta = :hinta, lisätietoja = :lisatietoja, lisäyspäivä = CURRENT_DATE WHERE id = :id');
 
@@ -105,11 +123,17 @@
 
     }
 
+    /**
+     * Funktio poistaa Tuote olionm jolle funktiota kutsutiinm tietokannasta
+     */
     public function poista(){
       $query = DB::connection()->prepare('DELETE FROM Tuote WHERE id = :id');
       $query->execute(array('id' => $this->id));
     }
 
+    /**
+     * Funktio tarkistaa Tuote olion kuvauksen ja palauttaa siinä olevat virheet
+     */
     public function validate_kuvaus(){
       $errors = array();
 
@@ -126,6 +150,9 @@
       return $errors;
     }
 
+    /**
+     * Funktio tarkistaa Tuote olion hinnan ja palauttaa siinä olevat virheet
+     */
     public function validate_hinta(){
       $errors = array();
       if($this->hinta == '' || $this->hinta == null){
@@ -147,6 +174,9 @@
       return $errors;
     }
 
+    /**
+     * Funktio tarkistaa Tuote olion lisätiedot ja palauttaa siinä olevat virheet
+     */
     public function validate_lisätiedot(){
       $errors = array();
       if(strlen($this->lisätietoja) > 300){
