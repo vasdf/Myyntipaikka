@@ -5,10 +5,10 @@
   }
 
   $routes->get('/', function() {
-    HelloWorldController::index();
+    View::make('home.html');
   });
 
-  $routes->get('/tuotteet', 'onko_kirjautunut', function() {
+  $routes->get('/tuotteet', function() {
     TuoteController::lista();
   });
 
