@@ -24,7 +24,7 @@
       </tr>
     </thead>
 
-    <h2>Myynnissä olevat tuotteesi:</h2>
+    <h2>Käyttäjän myynnissä olevat tuotteet:</h2>
 
     <tbody>
       {% for tuote in tuotteet %}
@@ -43,6 +43,7 @@
     </tbody>
   </table>
 
+  {% if user_logged_in.id == käyttäjä.id %}
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
@@ -93,5 +94,6 @@
     </tbody>
 
   </table>
-  
+  {% endif %}
+
 {% endblock %}
