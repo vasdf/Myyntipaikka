@@ -60,38 +60,10 @@
     KäyttäjäController::tallenna();
   });
 
-
-
-
-
-
-
-
-
-  $routes->get('/item_list', function() {
-  	HelloWorldController::item_list();
+  $routes->get('/tuote/:id/tarjous', 'onko_kirjautunut', function($id) {
+    TarjousController::uusi($id);
   });
 
-  $routes->get('/login', function() {
-    HelloWorldController::login();
-  });
-
-  $routes->get('/profile', function() {
-    HelloWorldController::profile();
-  });
-
-  $routes->get('/edit_item', function() {
-    HelloWorldController::edit_item();
-  });
-
-  $routes->get('/add_item', function() {
-    HelloWorldController::add_item();
-  });
-
-  $routes->get('/item_info', function() {
-    HelloWorldController::item_info();
-  });
-
-  $routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
+  $routes->post('/tuote/:id/tarjous', function($id) {
+    TarjousController::tallenna($id);
   });

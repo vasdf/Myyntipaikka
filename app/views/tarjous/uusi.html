@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+	<h1>Tuote, josta olet tekemässä tarjousta:</h1>
+
+	<ul>
+    	<li><strong>Tuote: </strong>{{tuote.kuvaus}}</li>
+    	<li><strong>Myyjä: </strong>{{tuote.myyjä_id}}</li>
+    	<li><strong>Hintapyyntö: </strong>{{tuote.hinta}}</li>
+    	<li><strong>Lisätietoja: </strong>{{tuote.lisätietoja}}</li>
+    	<li><strong>Lisäyspäivä: </strong>{{tuote.lisäyspäivä}}</li>
+    </ul>
+
+	<form method="post" action="{{base_path}}/tuote/{{tuote.id}}/tarjous">
+	  <div class="form-group">
+	    <label>Hintatarjous:</label>
+	  	<input type="text" name="hintatarjous" class="form-control">
+	  </div>
+
+	  <div class="form-group">
+	  	<label>Lisätietoja:</label>
+	  	<textarea name="lisätietoja" class="form-control"></textarea>
+	  </div>
+
+	  <div class="form-group">
+	  	<button type="submit" class="btn btn-primary">Tee tarjous</button>
+	  </div>
+
+	</form>
+
+{% endblock %}

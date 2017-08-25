@@ -35,8 +35,11 @@
     public static function näytä($id){
       $käyttäjä = Käyttäjä::etsi($id);
       $käyttäjän_tuotteet = TuoteController::käyttäjän_tuotteet($id);
+      $käyttäjän_tekemät_tarjoukset = TarjousController::käyttäjän_tekemät_tarjoukset($id);
 
-      View::make('käyttäjä/profiili.html', array('käyttäjä' => $käyttäjä, 'tuotteet' => $käyttäjän_tuotteet));
+      $käyttäjälle_tehdyt_tarjoukset = TarjousController::käyttäjälle_tehdyt_tarjoukset($id);
+
+      View::make('käyttäjä/profiili.html', array('käyttäjä' => $käyttäjä, 'tuotteet' => $käyttäjän_tuotteet, 'tarjoukset' => $käyttäjän_tekemät_tarjoukset, 'tarjoukset2' => $käyttäjälle_tehdyt_tarjoukset));
     }
 
     public static function rekisteröidy(){

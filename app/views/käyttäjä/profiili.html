@@ -24,7 +24,7 @@
       </tr>
     </thead>
 
-    <h2>Käyttäjän tuotelistaukset:</h2>
+    <h2>Myynnissä olevat tuotteesi:</h2>
 
     <tbody>
       {% for tuote in tuotteet %}
@@ -41,6 +41,57 @@
         </tr>
       {% endfor %}  
     </tbody>
+  </table>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Tuote:</th>
+        <th>Hintatarjous:</th>
+        <th>Lisätietoja:</th>
+        <th>Päivämäärä:</th>
+      </tr>
+    </thead>
+
+    <h2>Muille tehdyt tarjoukset:</h2>
+
+    <tbody>
+      {% for tarjous in tarjoukset %}
+        <tr>
+          <td><a href="{{base_path}}/tuote/{{tarjous.tuote_id}}">{{tarjous.tuote_kuvaus}}</a></td>
+          <td>{{tarjous.hintatarjous}}</td>
+          <td>{{tarjous.lisätietoja}}</td>
+          <td>{{tarjous.päivämäärä}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Tuote:</th>
+        <th>Tarjouksen tekijä:</th>
+        <th>Hintatarjous:</th>
+        <th>Lisätietoja:</th>
+        <th>Päivämäärä:</th>
+      </tr>
+    </thead>
+
+    <h2>Sinulle tehdyt tarjoukset:</h2>
+
+    <tbody>
+      {% for tarjous in tarjoukset2 %}
+        <tr>
+          <td><a href="{{base_path}}/tuote/{{tarjous.tuote_id}}">{{tarjous.tuote_kuvaus}}</a></td>
+          <td><a href="{{base_path}}/profiili/{{tarjous.ostaja_id}}">{{tarjous.ostaja_nimi}}</a></td>
+          <td>{{tarjous.hintatarjous}}</td>
+          <td>{{tarjous.lisätietoja}}</td>
+          <td>{{tarjous.päivämäärä}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+
   </table>
   
 {% endblock %}

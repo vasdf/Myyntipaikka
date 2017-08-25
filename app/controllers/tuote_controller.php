@@ -31,6 +31,12 @@
       return $tuotteet;
     }
 
+    public static function haetuote($id){
+      $tuote = Tuote::etsi($id);
+
+      return $tuote;
+    }
+
     public static function uusi() {
       View::make('tuote/uusi.html');
     }

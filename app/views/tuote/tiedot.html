@@ -31,7 +31,7 @@
         {% if user_logged_in.id == myyjä.id %}
           <th><a class="btn btn-warning btn-xs" href="{{base_path}}/tuote/{{tuote.id}}/muokkaa">Muokkaa</a> {{forms.poista_painike("#{base_path}/tuote/#{tuote.id}/poista")}}
         {% else %}
-          <th><a class="btn btn-default btn-sm" href="#">Osta</a></th>
+          <th><a class="btn btn-default btn-sm" href="{{base_path}}/tuote/{{tuote.id}}/tarjous">Tee tarjous</a></th>
         {% endif %}
       </tr>
     </tbody>

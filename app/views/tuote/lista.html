@@ -24,7 +24,11 @@
           <td>{{tuote.hinta}}</td>
           <td>{{tuote.myyjä_nimi}}</td>
           <td>{{tuote.lisäyspäivä}}</td>
-          <th><a class="btn btn-default btn-sm" href="#">Osta</a></th>
+          {% if user_logged_in.id == tuote.myyjä_id %}
+            <th></th>
+          {% else %}  
+            <th><a class="btn btn-default btn-sm" href="{{base_path}}/tuote/{{tuote.id}}/tarjous">Tee tarjous</a></th>
+          {% endif %}
         </tr>
       {% endfor %}  
     </tbody>

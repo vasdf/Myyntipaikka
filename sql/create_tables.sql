@@ -18,4 +18,13 @@ CREATE TABLE Tuote(
 	lisäyspäivä DATE DEFAULT CURRENT_DATE
 );
 
+CREATE TABLE Tarjous(
+	id SERIAL PRIMARY KEY,
+	tuote_id INTEGER REFERENCES Tuote(id),
+	ostaja_id INTEGER REFERENCES Käyttäjä(id),
+	hintatarjous DECIMAL(20,2) NOT NULL,
+	lisätietoja varchar(300),
+	päivämäärä DATE DEFAULT CURRENT_DATE
+);
+
 
