@@ -36,7 +36,7 @@
           {% if user_logged_in.id == käyttäjä.id %}
             <th><a class="btn btn-warning btn-xs" href="{{base_path}}/tuote/{{tuote.id}}/muokkaa">Muokkaa</a> {{forms.poista_painike("#{base_path}/tuote/#{tuote.id}/poista")}}
           {% else %}
-            <th><a class="btn btn-default btn-sm" href="#">Osta</a></th>
+            <th><a class="btn btn-default btn-sm" href="{{base_path}}/tuote/{{tuote.id}}/tarjous">Tee tarjous</a></th>
           {% endif %}
         </tr>
       {% endfor %}  
@@ -51,6 +51,7 @@
         <th>Hintatarjous:</th>
         <th>Lisätietoja:</th>
         <th>Päivämäärä:</th>
+        <th></th>
       </tr>
     </thead>
 
@@ -63,6 +64,7 @@
           <td>{{tarjous.hintatarjous}}</td>
           <td>{{tarjous.lisätietoja}}</td>
           <td>{{tarjous.päivämäärä}}</td>
+          <td><a class="btn btn-warning btn-xs" href="{{base_path}}/tarjous/{{tarjous.id}}/muokkaa">Muokkaa</a> {{forms.poista_painike("#{base_path}/tarjous/#{tarjous.id}/poista")}}</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -76,6 +78,7 @@
         <th>Hintatarjous:</th>
         <th>Lisätietoja:</th>
         <th>Päivämäärä:</th>
+        <th></th>
       </tr>
     </thead>
 
@@ -89,6 +92,7 @@
           <td>{{tarjous.hintatarjous}}</td>
           <td>{{tarjous.lisätietoja}}</td>
           <td>{{tarjous.päivämäärä}}</td>
+          <td>{{forms.poista_painike("#{base_path}/tarjous/#{tarjous.id}/poista", "Hylkää")}}</td>
         </tr>
       {% endfor %}
     </tbody>

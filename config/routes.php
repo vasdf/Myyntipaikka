@@ -32,6 +32,14 @@
     TuoteController::päivitä($id);
   });
 
+  $routes->get('/tarjous/:id/muokkaa', 'onko_kirjautunut', function($id){
+    TarjousController::muokkaa($id);
+  });
+
+  $routes->post('/tarjous/:id/muokkaa', function($id){
+    TarjousController::päivitä($id);
+  });
+
   $routes->get('/kirjaudu', function() {
     KäyttäjäController::kirjaudu();
   });
@@ -50,6 +58,10 @@
 
   $routes->post('/tuote/:id/poista', function($id){
     TuoteController::poista($id);
+  });
+
+  $routes->post('/tarjous/:id/poista', function($id){
+    TarjousController::poista($id);
   });
 
   $routes->get('/rekisteroidy', function() {

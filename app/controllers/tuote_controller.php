@@ -80,9 +80,9 @@
     public static function muokkaa($id){
       $myyjä_id = Tuote::etsi_tuotteen_myyjä($id);
 
-      if (!BaseController::check_logged_in_id($myyjä_id)){
+      if ($_SESSION['käyttäjä'] != $myyjä_id){
 
-        Redirect::to('/', array('error' => 'Et voi muokata muiden tuotteita'));
+        Redirect::to('/', array('error' => 'Et voi muokata muiden tuotteita tai tuotetta ei ole olemassa'));
       }
 
 

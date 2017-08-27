@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+  {% if errors %}
+    <div class="alert alert-danger">
+      <ul>
+        {% for error in errors %}
+          <lil>{{error}}</lil>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <h2>Tuote, josta olet tehnyt tarjouksen:</h2>
+
+  <ul>
+    <li><strong>Tuote: </strong><a href="{{base_path}}/tuote/{{tuote.id}}">{{tuote.kuvaus}}</a></li>
+    <li><strong>Myyjä: </strong><a href="{{base_path}}/profiili/{{tuote.myyjä_id}}">{{myyjä.nimi}}</a></li>
+    <li><strong>Tarjous tehty: </strong>{{tarjous.päivämäärä}}</li>
+    <li><strong>Tehty hintatarjous: </strong>{{tarjous.hintatarjous}}</li>
+    <li><strong>Tarjouksen lisätiedot: </strong>{{tarjous.lisätietoja}}</li>
+  </ul>
+
+  <h2>Muokkaa tarjoustasi:</h2>
+
+  <form method="post" action="{{base_path}}/tarjous/{{tarjous.id}}/muokkaa">
+    <div class="form-group">
+      <label>Hintatarjous</label>
+      <input type="text" name="hintatarjous" class="form-control" value="{{tarjous.hintatarjous}}">
+    </div>
+
+    <div class="form-group">
+      <label>Lisätietoja</label>
+      <textarea name="lisätietoja" class="form-control">{{tarjous.lisätietoja}}</textarea>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Tallenna</button>
+    </div>
+
+  </form>
+
+{% endblock %}

@@ -102,10 +102,6 @@
     public function tallenna(){
       $query = DB::connection()->prepare('INSERT INTO Tuote (myyjä_id, kuvaus, hinta, lisätietoja, lisäyspäivä) VALUES (:myyjaid, :kuvaus, :hinta, :lisatietoja, CURRENT_DATE) RETURNING id');
 
-      $hinta = str_replace(',','.', $this->hinta);
-
-      $this->hinta = $hinta;
-
       $query->execute(array('myyjaid' => $this->myyjä_id, 'kuvaus' => $this->kuvaus, 'hinta' => floatval($this->hinta), 'lisatietoja' => $this->lisätietoja));
 
       $rivi = $query->fetch();
@@ -137,13 +133,11 @@
     public function validate_kuvaus(){
       $errors = array();
 
-      $kuvaus = str_replace(' ', '', $this->kuvaus);
-
-      if($kuvaus == '' || $kuvaus == null || strlen($kuvaus) < 3){
+      if(parent::merkkijono_liian_lyhyt($this->kuvaus, 3)){
         $errors[] = 'Kuvaus pitää olla vähintään 3 merkkiä!';
       }
 
-      if(strlen($this->kuvaus) > 30){
+      if(parent::merkkijono_liian_pitkä($this->kuvaus, 30)){
         $errors[] = 'Kuvaus ei saa olla yli 30 merkkiä!';
       } 
 
@@ -155,17 +149,32 @@
      */
     public function validate_hinta(){
       $errors = array();
+
       if($this->hinta == '' || $this->hinta == null){
         $errors[] = 'Hinta ei voi olla tyhjä!';
       }
 
-      if(strlen($this->hinta) > 10){
-        $errors[] = 'Hinta ei voi olla yli 10 numeroa!';
+      //Lisätään hintaan sentit jos niitä ei ole
+      if(strpos($this->hinta, '.') == false){
+        $this->hinta = $this->hinta . '.00';
       }
 
-      $hinta = str_replace(',','.', $this->hinta);
+      $hinta_ilman_välipistettä = str_replace('.','', $this->hinta);
 
-      $this->hinta = $hinta;
+      if(preg_match('/\D/', $hinta_ilman_välipistettä)){
+        $errors[] = 'Hinta saa koostua ainoastaan numeroista tai eurot ja sentit erottavasta pisteestä!';
+        return $errors;
+      }
+
+      $pituus_ilman_senttejä = strpos($this->hinta, '.');
+
+      if(strlen($this->hinta) > $pituus_ilman_senttejä + 3){
+        $errors[] = 'Eurot ja sentit erottavan pisteen jälkeen ei saa olla muuta kuin 2 numeroa!';
+      }
+
+      if($pituus_ilman_senttejä > 13){
+        $errors[] = 'Hinnan euroja kuvaava numero on oltava korkeintaan 13 merkkiä!';
+      }
 
       if(is_numeric($this->hinta) == false){
         $errors[] = 'Hinta täytyy olla numero tai desimaaliluku!';

@@ -26,4 +26,22 @@
 
       return $errors;
     }
+
+    public function merkkijono_liian_pitkä($merkkijono, $maxpituus){
+      if(strlen($merkkijono) > $maxpituus){
+        return true;
+      }else{
+        return false;
+      }
+    }
+
+    public function merkkijono_liian_lyhyt($merkkijono, $minpituus){
+       $merkkijono2 = str_replace(" ", "", $merkkijono);
+
+       if($merkkijono2 == '' || $merkkijono2 == null || strlen($merkkijono2) < $minpituus){
+        return true;
+       }else{
+        return false;
+       }
+    }
   }
