@@ -15,7 +15,8 @@ CREATE TABLE Tuote(
 	kuvaus varchar(30) NOT NULL,
 	hinta decimal(15,2) NOT NULL,
 	lisätietoja varchar(300),
-	lisäyspäivä DATE DEFAULT CURRENT_DATE
+	lisäyspäivä DATE DEFAULT CURRENT_DATE,
+	myytävänä boolean DEFAULT TRUE
 );
 
 CREATE TABLE Tarjous(
@@ -24,6 +25,13 @@ CREATE TABLE Tarjous(
 	ostaja_id INTEGER REFERENCES Käyttäjä(id),
 	hintatarjous DECIMAL(20,2) NOT NULL,
 	lisätietoja varchar(300),
+	päivämäärä DATE DEFAULT CURRENT_DATE,
+	voimassa boolean DEFAULT TRUE
+);
+
+CREATE TABLE Kaupat(
+	id SERIAL PRIMARY KEY,
+	tarjous_id INTEGER REFERENCES Tarjous(id),
 	päivämäärä DATE DEFAULT CURRENT_DATE
 );
 
