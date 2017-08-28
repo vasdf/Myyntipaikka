@@ -64,6 +64,10 @@
     TarjousController::poista($id);
   });
 
+  $routes->post('/tarjous/:id/hyvaksy', function($id){
+    KaupatController::tallenna($id);
+  });
+
   $routes->get('/rekisteroidy', function() {
     KäyttäjäController::rekisteröidy();
   });

@@ -36,10 +36,11 @@
       $käyttäjä = Käyttäjä::etsi($id);
       $käyttäjän_tuotteet = TuoteController::käyttäjän_tuotteet($id);
       $käyttäjän_tekemät_tarjoukset = TarjousController::käyttäjän_tekemät_tarjoukset($id);
-
       $käyttäjälle_tehdyt_tarjoukset = TarjousController::käyttäjälle_tehdyt_tarjoukset($id);
+      $käyttäjän_ostamat_tuotteet = KaupatController::käyttäjän_ostamat_tuotteet($id);
+      $käyttäjän_myydyt_tuotteet = KaupatController::käyttäjän_myydyt_tuotteet($id);
 
-      View::make('käyttäjä/profiili.html', array('käyttäjä' => $käyttäjä, 'tuotteet' => $käyttäjän_tuotteet, 'tarjoukset' => $käyttäjän_tekemät_tarjoukset, 'tarjoukset2' => $käyttäjälle_tehdyt_tarjoukset));
+      View::make('käyttäjä/profiili.html', array('käyttäjä' => $käyttäjä, 'tuotteet' => $käyttäjän_tuotteet, 'tarjoukset' => $käyttäjän_tekemät_tarjoukset, 'tarjoukset2' => $käyttäjälle_tehdyt_tarjoukset, 'kaupat1' => $käyttäjän_ostamat_tuotteet, 'kaupat2' => $käyttäjän_myydyt_tuotteet));
     }
 
     public static function rekisteröidy(){

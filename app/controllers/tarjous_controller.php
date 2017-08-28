@@ -32,12 +32,12 @@
 
   	}
 
-  	public static function käyttäjän_tekemät_tarjoukset($id){
-  		return Tarjous::käyttäjän_tekemät_tarjoukset($id);
+  	public static function käyttäjän_tekemät_tarjoukset($käyttäjä_id){
+  		return Tarjous::käyttäjän_tekemät_tarjoukset($käyttäjä_id);
   	}
 
-  	public static function käyttäjälle_tehdyt_tarjoukset($id){
-  		return Tarjous::käyttäjälle_tehdyt_tarjoukset($id);
+  	public static function käyttäjälle_tehdyt_tarjoukset($käyttäjä_id){
+  		return Tarjous::käyttäjälle_tehdyt_tarjoukset($käyttäjä_id);
   	}
 
     public static function poista($id){
@@ -67,11 +67,32 @@
       $tarjous = new Tarjous(array(
         'id' => $id,
         'hintatarjous' => $tiedot['hintatarjous'],
-        'lisätietoja' => $tiedot['lisätietoja']
+        'lisätietoja' => $tiedot['lisätietoja'],
+        'voimassa' => "TRUE"
         ));
 
-      $tarjous->päivitä();
+      $errors = $tarjous->errors();
 
-      Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('message' => 'Tarjousta muokattu onnistuneesti!'));
+      if(count($errors) == 0){
+        $tarjous->päivitä();
+
+        Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('message' => 'Tarjousta muokattu onnistuneesti!'));
+      } else {
+        View::make('tarjous/muokkaa.html', array('errors' => $errors, 'tarjous' => $tarjous));
+      }
+    }
+
+    public static function aseta_voimassa_false($tarjous_id){
+      $tarjous = Tarjous::etsi($tarjous_id);
+
+      $tarjous->voimassa = "FALSE";
+
+      $tarjous->päivitä();
+    }
+
+    public static function hae_tuotteen_id($tarjous_id){
+      $tarjous = Tarjous::etsi($tarjous_id);
+
+      return $tarjous->tuote_id;
     }
   }

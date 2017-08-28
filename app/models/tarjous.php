@@ -2,7 +2,7 @@
 
   class Tarjous extends BaseModel{
 
-  	public $id, $tuote_id, $ostaja_id, $myyjä_nimi, $ostaja_nimi, $tuote_kuvaus, $hintatarjous, $lisätietoja, $päivämäärä;
+  	public $id, $tuote_id, $ostaja_id, $myyjä_nimi, $ostaja_nimi, $tuote_kuvaus, $hintatarjous, $lisätietoja, $päivämäärä, $voimassa;
 
   	public function __construct($attributes){
   		parent::__construct($attributes);
@@ -45,12 +45,12 @@
   	}
 
     public function päivitä(){
-      $query = DB::connection()->prepare('UPDATE Tarjous SET hintatarjous = :hintatarjous, lisätietoja = :lisatietoja, päivämäärä = CURRENT_DATE WHERE id = :id');
-      $query->execute(array('hintatarjous' => $this->hintatarjous, 'lisatietoja' => $this->lisätietoja, 'id' => $this->id));
+      $query = DB::connection()->prepare('UPDATE Tarjous SET hintatarjous = :hintatarjous, lisätietoja = :lisatietoja, päivämäärä = CURRENT_DATE, voimassa = :voimassa WHERE id = :id');
+      $query->execute(array('hintatarjous' => $this->hintatarjous, 'lisatietoja' => $this->lisätietoja, 'id' => $this->id, 'voimassa' => $this->voimassa));
     }
 
   	public static function käyttäjän_tekemät_tarjoukset($id){
-  		$query = DB::connection()->prepare('SELECT ta.id, ta.tuote_id, ta.ostaja_id, tu.kuvaus, ta.hintatarjous, ta.lisätietoja, ta.päivämäärä FROM Tarjous ta INNER JOIN Tuote tu ON ta.tuote_id = tu.id WHERE ostaja_id = :id');
+  		$query = DB::connection()->prepare('SELECT ta.id, ta.tuote_id, ta.ostaja_id, tu.kuvaus, ta.hintatarjous, ta.lisätietoja, ta.päivämäärä FROM Tarjous ta INNER JOIN Tuote tu ON ta.tuote_id = tu.id WHERE ostaja_id = :id AND ta.voimassa = TRUE');
   		$query->execute(array('id' => $id));
 
   		$rivit = $query->fetchAll();
@@ -72,7 +72,7 @@
   	}
 
   	public static function käyttäjälle_tehdyt_tarjoukset($id){
-  		$query = DB::connection()->prepare('SELECT ta.id, ta.tuote_id, ta.ostaja_id, tu.kuvaus, ta.hintatarjous, ta.lisätietoja, ta.päivämäärä, k.nimi FROM Tarjous ta INNER JOIN Tuote tu ON ta.tuote_id = tu.id INNER JOIN Käyttäjä k ON k.id = ta.ostaja_id WHERE tu.myyjä_id = :id');
+  		$query = DB::connection()->prepare('SELECT ta.id, ta.tuote_id, ta.ostaja_id, tu.kuvaus, ta.hintatarjous, ta.lisätietoja, ta.päivämäärä, k.nimi, ta.voimassa FROM Tarjous ta INNER JOIN Tuote tu ON ta.tuote_id = tu.id INNER JOIN Käyttäjä k ON k.id = ta.ostaja_id WHERE tu.myyjä_id = :id AND ta.voimassa = TRUE');
   		$query->execute(array('id' => $id));
 
   		$rivit = $query->fetchAll();

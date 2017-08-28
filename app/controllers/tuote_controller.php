@@ -102,7 +102,8 @@
           'id' => $id,
           'kuvaus' => $tiedot['kuvaus'],
           'hinta' => $tiedot['hinta'],
-          'lisätietoja' => $tiedot['lisätietoja']
+          'lisätietoja' => $tiedot['lisätietoja'],
+          'voimassa' => 'TRUE'
         );
 
       $tuote = new Tuote($attributes);
@@ -126,5 +127,13 @@
       $tuote->poista();
 
       Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('message' => 'Tuote poistettu!'));
+    }
+
+    public static function aseta_myynnissä_false($tuote_id){
+      $tuote = Tuote::etsi($tuote_id);
+
+      $tuote->myynnissä = "FALSE";
+
+      $tuote->päivitä();
     }
   }

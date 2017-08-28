@@ -2,7 +2,7 @@
 
   class Tuote extends BaseModel{
 
-  	public $id, $myyjä_id, $myyjä_nimi, $kuvaus, $hinta, $lisätietoja, $lisäyspäivä;
+  	public $id, $myyjä_id, $myyjä_nimi, $kuvaus, $hinta, $lisätietoja, $lisäyspäivä, $myynnissä;
 
   	public function __construct($attributes){
   		parent::__construct($attributes);
@@ -13,7 +13,7 @@
      * Funktio etsii tietokannasta kaikki tuotteen ja palauttaa ne
      */
   	public static function kaikki(){
-  		$query = DB::connection()->prepare('SELECT t.id, t.myyjä_id, k.nimi, t.kuvaus, t.hinta, t.lisätietoja, t.lisäyspäivä FROM Tuote t INNER JOIN Käyttäjä k ON t.myyjä_id = k.id');
+  		$query = DB::connection()->prepare('SELECT t.id, t.myyjä_id, k.nimi, t.kuvaus, t.hinta, t.lisätietoja, t.lisäyspäivä FROM Tuote t INNER JOIN Käyttäjä k ON t.myyjä_id = k.id WHERE t.myytävänä = TRUE');
   		$query->execute();
   		$rivit = $query->fetchAll();
   		$tuotteet = array();
@@ -63,7 +63,7 @@
      * ja palauttaa tuotteet
      */
     public static function käyttäjän_tuotteet($id){
-      $query = DB::connection()->prepare('SELECT * FROM Tuote WHERE myyjä_id = :myyja_id');
+      $query = DB::connection()->prepare('SELECT * FROM Tuote WHERE myyjä_id = :myyja_id AND myytävänä = TRUE');
       $query->execute(array('myyja_id' => $id));
       $rivit = $query->fetchAll();
       $tuotteet = array();
@@ -113,9 +113,9 @@
      * Funktio muokkaa Tuote olion, jolle funktiota kutsuttiin, tietoja tietokannasssa
      */
     public function päivitä(){
-      $query = DB::connection()->prepare('UPDATE Tuote SET kuvaus = :kuvaus, hinta = :hinta, lisätietoja = :lisatietoja, lisäyspäivä = CURRENT_DATE WHERE id = :id');
+      $query = DB::connection()->prepare('UPDATE Tuote SET kuvaus = :kuvaus, hinta = :hinta, lisätietoja = :lisatietoja, lisäyspäivä = CURRENT_DATE, myytävänä = :myynnissa WHERE id = :id');
 
-      $query->execute(array('kuvaus' => $this->kuvaus, 'hinta' => $this->hinta, 'lisatietoja' => $this->lisätietoja, 'id' => $this->id));
+      $query->execute(array('kuvaus' => $this->kuvaus, 'hinta' => $this->hinta, 'lisatietoja' => $this->lisätietoja, 'id' => $this->id, 'myynnissa' => $this->myynnissä));
 
     }
 
