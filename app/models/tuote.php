@@ -188,7 +188,8 @@
      */
     public function validate_lisätiedot(){
       $errors = array();
-      if(strlen($this->lisätietoja) > 300){
+
+      if(parent::merkkijono_liian_pitkä($this->lisätietoja, 300)){
         $errors[] = 'Lisätiedot eivät voi olla yli 300 merkkiä!';
       }
 

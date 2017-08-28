@@ -18,9 +18,18 @@
   			'lisätietoja' => $tiedot['lisätietoja']
   		));
 
-  		$tarjous->tallenna();
+      $errors = $tarjous->errors();
 
-  		Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('message' => 'Tarjous tehty tuotteesta!'));
+      if(count($errors) == 0){
+  		  $tarjous->tallenna();
+
+  		  Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('message' => 'Tarjous tehty tuotteesta!'));
+      } else {
+        $tuote = TuoteController::haetuote($id);
+
+        View::make('tarjous/uusi.html', array('errors' => $errors, 'tarjous' => $tarjous, 'tuote' => $tuote));
+      }
+
   	}
 
   	public static function käyttäjän_tekemät_tarjoukset($id){

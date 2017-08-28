@@ -74,17 +74,39 @@
     public function validate_nimi(){
       $errors = array();
 
-      $nimi = str_replace(' ', '', $this->nimi);
+      if(self::nimi_jo_käytössä($this->nimi)){
+        $errors[] = 'Nimi on jo käytössä!';
+      }
 
-      if(strlen($nimi) < 3 || $nimi == '' || $nimi == null){
+      if(preg_match('/\s/', $this->nimi)){
+        $errors[] = 'Nimi ei saa sisältää välilyöntejä!';
+      }
+
+      if(parent::merkkijono_liian_lyhyt($this->nimi, 3)){
         $errors[] = 'Nimi oltava vähintään 3 merkkiä!';
       }
 
-      if(strlen($this->nimi) > 20){
+      if(parent::merkkijono_liian_pitkä($this->nimi, 20)){
         $errors[] = 'Nimi ei saa olla yli 20 merkkiä!';
       }
 
       return $errors;
+    }
+
+    /**
+     * Funktio tarkistaa onko annettu nimi jo tietokannassa
+     */
+    public static function nimi_jo_käytössä($nimi){
+      $query = DB::connection()->prepare('SELECT * FROM Käyttäjä WHERE nimi = :nimi');
+      $query->execute(array('nimi' => $nimi));
+
+      $rivi = $query->fetch();
+
+      if($rivi){
+        return true;
+      } else {
+        return false;
+      }
     }
 
     /**
@@ -97,7 +119,7 @@
         $errors[] = 'Salasana oltava vähintään 4 merkkiä!';
       }
 
-      if(strlen($this->salasana) > 20){
+      if(parent::merkkijono_liian_pitkä($this->salasana, 20)){
         $errors[] = 'Salasana ei saa olla yli 20 merkkiä!';
       }
 
@@ -114,7 +136,7 @@
     public function validate_puhelinnumero(){
       $errors = array();
 
-      if(strlen($this->puh) > 15){
+      if(parent::merkkijono_liian_pitkä($this->puh, 15)){
         $errors[] = 'Puhelinnumero ei voi olla yli 15 merkkiä!';
       }
 
@@ -127,7 +149,7 @@
     public function validate_sähköposti(){
       $errors = array();
 
-      if(strlen($this->sähköposti) > 40){
+      if(parent::merkkijono_liian_pitkä($this->sähköposti, 40)){
         $errors[] = 'Sähköposti ei voi olla yli 40 merkkiä!';
       }
 

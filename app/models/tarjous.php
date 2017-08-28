@@ -6,7 +6,7 @@
 
   	public function __construct($attributes){
   		parent::__construct($attributes);
-  		//validaattorit
+  		$this->validators = array('validate_hintatarjous', 'validate_lisätiedot');
   	}
 
     public static function etsi($id){
@@ -106,6 +106,52 @@
       $ostaja_id = $rivi['ostaja_id'];
 
       return $ostaja_id;
+    }
+
+    public function validate_hintatarjous(){
+      $errors = array();
+
+      if($this->hintatarjous == '' || $this->hintatarjous == null){
+        $errors[] = 'Hintatarjous ei voi olla tyhjä!';
+      }
+
+      $hintatarjous_ilman_välipistettä = str_replace('.','', $this->hintatarjous);
+
+      if(preg_match('/\D/', $hintatarjous_ilman_välipistettä)){
+        $errors[] = 'Hintatarjous saa koostua ainoastaan numeroista tai eurot ja sentit erottavasta pisteestä!';
+        return $errors;
+      }
+
+      //Lisätään hintaan sentit jos niitä ei ole, validoinnin helpottamiseksi
+      if(strpos($this->hintatarjous, '.') == false){
+        $this->hintatarjous = $this->hintatarjous . '.00';
+      }
+
+      $pituus_ilman_senttejä = strpos($this->hintatarjous, '.');
+
+      if(strlen($this->hintatarjous) > $pituus_ilman_senttejä + 3){
+        $errors[] = 'Eurot ja sentit erottavan pisteen jälkeen ei saa olla muuta kuin 2 numeroa!';
+      }
+
+      if($pituus_ilman_senttejä > 13){
+        $errors[] = 'Hintatarjouksen euroja kuvaava numero on oltava korkeintaan 13 merkkiä!';
+      }
+
+      if(is_numeric($this->hintatarjous) == false){
+        $errors[] = 'Hintatarjouksen täytyy olla numero tai desimaaliluku!';
+      }
+
+      return $errors;
+    }
+
+    public function validate_lisätiedot(){
+      $errors = array();
+      
+      if(parent::merkkijono_liian_pitkä($this->lisätietoja, 300)){
+        $errors[] = 'Lisätiedot eivät voi olla yli 300 merkkiä!';
+      }
+
+      return $errors; 
     }
 
 
