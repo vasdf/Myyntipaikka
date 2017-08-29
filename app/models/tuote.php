@@ -49,7 +49,8 @@
   				'kuvaus' => $rivi['kuvaus'],
   				'hinta' => $rivi['hinta'],
   				'lisätietoja' => $rivi['lisätietoja'],
-  				'lisäyspäivä' => $rivi['lisäyspäivä']
+  				'lisäyspäivä' => $rivi['lisäyspäivä'],
+          'myynnissä' => $rivi['myytävänä']
   				));
 
   			return $tuote;

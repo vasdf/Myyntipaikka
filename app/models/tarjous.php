@@ -99,6 +99,11 @@
       $query->execute(array('id' => $this->id));
     }
 
+    public static function poista_tarjoukset_tuotteelle($id){
+      $query = DB::connection()->prepare('DELETE FROM Tarjous WHERE tuote_id = :id');
+      $query->execute(array('id' => $id));
+    }
+
     public static function etsi_ostajan_id($tarjous_id){
       $query = DB::connection()->prepare('SELECT ostaja_id FROM Tarjous WHERE id = :id LIMIT 1');
       $query->execute(array('id' => $tarjous_id));
@@ -153,6 +158,4 @@
 
       return $errors; 
     }
-
-
   }

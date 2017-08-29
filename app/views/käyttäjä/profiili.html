@@ -8,6 +8,14 @@
     </div>
   {% endif %}
 
+  {% if error %}
+    <div class="alert alert-danger">
+      <ul>
+        <lil>{{error}}</lil>
+      </ul>
+    </div>
+  {% endif %}
+
   <h1>Käyttäjän tiedot:</h1>
 
   <ul>
@@ -101,6 +109,8 @@
           <td>{{tarjous.päivämäärä}}</td>
           <td>
             <form method="post" action="{{base_path}}/tarjous/{{tarjous.id}}/hyvaksy" style="display: inline-block;">
+              <input type="hidden" name="hintatarjous" value="{{tarjous.hintatarjous}}">
+              <input type="hidden" name="lisätietoja" value="{{tarjous.lisätietoja}}">
               <button type="submit" class="btn btn-success btn-xs">Hyväksy</button>
             </form>
             {{forms.poista_painike("#{base_path}/tarjous/#{tarjous.id}/poista", "Hylkää")}}

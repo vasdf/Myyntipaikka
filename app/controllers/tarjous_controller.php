@@ -8,11 +8,13 @@
   		View::make('tarjous/uusi.html', array('tuote' => $tuote));
   	}
 
-  	public static function tallenna($id){
+  	public static function tallenna($tuote_id){
   		$tiedot = $_POST;
 
+      TarjousController::tarkista_onko_tarjouksen_tekeminen_sallittua($tuote_id, $tiedot);
+
   		$tarjous = new Tarjous(array(
-  			'tuote_id' => $id,
+  			'tuote_id' => $tuote_id,
   			'ostaja_id' => $_SESSION['käyttäjä'],
   			'hintatarjous' => $tiedot['hintatarjous'],
   			'lisätietoja' => $tiedot['lisätietoja']
@@ -41,6 +43,10 @@
   	}
 
     public static function poista($id){
+      if(KaupatController::onko_tarjous_hyväksytty($id)){
+        Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('error' => 'Tarjous, jonka yritit poistaa on jo hyväksytty!'));
+      }
+
       $tarjous = new Tarjous(array('id' => $id));
       $tarjous->poista();
 
@@ -48,11 +54,7 @@
     }
 
     public static function muokkaa($id){
-      $ostaja_id = Tarjous::etsi_ostajan_id($id);
-
-      if ($_SESSION['käyttäjä'] != $ostaja_id) {
-        Redirect::to('/', array('error' => 'Et voi muokata muiden tarjouksia tai tarjousta ei ole olemassa'));
-      }
+      self::tarkista_onko_muokkaus_sallittua($id);
 
       $tarjous = Tarjous::etsi($id);
       $tuote = Tuote::etsi($tarjous->tuote_id);
@@ -61,7 +63,10 @@
       View::make('tarjous/muokkaa.html', array('tarjous' => $tarjous, 'tuote' => $tuote, 'myyjä' => $myyjä));
     }
 
-    public static function päivitä($id){
+    public static function päivitä($id){ 
+
+      self::tarkista_onko_muokkaus_sallittua($id);
+
       $tiedot = $_POST;
 
       $tarjous = new Tarjous(array(
@@ -94,5 +99,55 @@
       $tarjous = Tarjous::etsi($tarjous_id);
 
       return $tarjous->tuote_id;
+    }
+
+    public static function poista_tarjoukset_tuotteelle($id){
+      Tarjous::poista_tarjoukset_tuotteelle($id);
+    }
+
+    public static function hae_tarjous($id){
+      return Tarjous::etsi($id);
+    }
+
+    public static function onko_tarjous_voimassa($id){
+      $tarjous = Tarjous::etsi($id);
+
+      if($tarjous){
+        return TRUE;
+      } else {
+        return FALSE;
+      }
+    }
+
+    public static function tarkista_onko_muokkaus_sallittua($tarjous_id){
+      if(KaupatController::onko_tarjous_hyväksytty($tarjous_id)){
+        Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('error' => 'Tarjous, jota yritit muokata on jo hyväksytty!'));
+      }
+
+      $ostaja_id = Tarjous::etsi_ostajan_id($tarjous_id);
+      if($ostaja_id == null){
+        Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('error' => 'Tuote, johon tarjous liittyi, on poistettu tai tarjouksesi on hylätty!'));
+      }
+
+      if ($_SESSION['käyttäjä'] != $ostaja_id) {
+        Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('error' => 'Et voi muokata muiden tarjouksia tai tarjousta ei ole olemassa'));
+      }
+    }
+
+    /**
+     * Funktion tarkistaa onko tuotetta, josta ollaan tekemässä tarjousta, joko muokattu tai poistettu tietokannasta
+     */
+    public static function tarkista_onko_tarjouksen_tekeminen_sallittua($tuote_id, $käyttäjän_tiedot_tuotteesta){
+      $tuote_tietokannassa = TuoteController::haetuote($tuote_id);
+
+      if($tuote_tietokannassa == null){
+        Redirect::to('/', array('error' => 'Tuote, josta olit tekemässä tarjousta, on poistettu!'));
+      }
+
+      if($käyttäjän_tiedot_tuotteesta['kuvaus'] != $tuote_tietokannassa->kuvaus || 
+        $käyttäjän_tiedot_tuotteesta['hinta'] != $tuote_tietokannassa->hinta || 
+        $käyttäjän_tiedot_tuotteesta['lisätietoja'] != $tuote_tietokannassa->lisätietoja){
+        Redirect::to('/', array('error' => 'Tuotetta, josta olit tekemässä tarjousta, on muokattu!'));
+      }
     }
   }

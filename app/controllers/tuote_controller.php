@@ -17,9 +17,14 @@
   	public static function näytä($id){
   		$tuote = Tuote::etsi($id);
 
-      $myyjä = Käyttäjä::etsi($tuote->myyjä_id);
+      if($tuote){
+        $myyjä = Käyttäjä::etsi($tuote->myyjä_id);
 
-  		View::make('tuote/tiedot.html', array('tuote'  => $tuote, 'myyjä' => $myyjä));
+  		  View::make('tuote/tiedot.html', array('tuote'  => $tuote, 'myyjä' => $myyjä));
+      } else {
+        Redirect::to('/', array('error' => 'Tuotetta ei ole olemassa!'));
+      }
+
   	}
 
     /**
@@ -103,7 +108,7 @@
           'kuvaus' => $tiedot['kuvaus'],
           'hinta' => $tiedot['hinta'],
           'lisätietoja' => $tiedot['lisätietoja'],
-          'voimassa' => 'TRUE'
+          'myynnissä' => 'TRUE'
         );
 
       $tuote = new Tuote($attributes);
@@ -112,6 +117,9 @@
       if(count($errors) > 0){
         View::make('tuote/muokkaa.html', array('errors' => $errors, 'attributes' => $attributes));
       } else {
+        //poistaa päivitetystä tuotteesta tehdyt tarjoukset, koska tuotteen tiedot muuttuneet
+        TarjousController::poista_tarjoukset_tuotteelle($id);
+
         $tuote->päivitä();
 
         Redirect::to('/tuote/' . $tuote->id, array('message' => 'Tuotetta muokattu onnistuneesti!'));
@@ -123,6 +131,8 @@
      * Funktio kutsuu Tuote luokan funktiota poista halutulle tuotteelle
      */
     public static function poista($id){
+      TarjousController::poista_tarjoukset_tuotteelle($id);
+
       $tuote = new Tuote(array('id' => $id));
       $tuote->poista();
 

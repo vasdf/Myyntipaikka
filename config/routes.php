@@ -16,7 +16,7 @@
     TuoteController::uusi();
   });
 
-  $routes->post('/tuote', function() {
+  $routes->post('/tuote', 'onko_kirjautunut',  function() {
     TuoteController::tallenna();
   });
 
@@ -28,7 +28,7 @@
     TuoteController::muokkaa($id);
   });
 
-  $routes->post('/tuote/:id/muokkaa', function($id){ 
+  $routes->post('/tuote/:id/muokkaa', 'onko_kirjautunut', function($id){ 
     TuoteController::päivitä($id);
   });
 
@@ -36,7 +36,7 @@
     TarjousController::muokkaa($id);
   });
 
-  $routes->post('/tarjous/:id/muokkaa', function($id){
+  $routes->post('/tarjous/:id/muokkaa', 'onko_kirjautunut', function($id){
     TarjousController::päivitä($id);
   });
 
@@ -48,7 +48,7 @@
     KäyttäjäController::käsittele_kirjautuminen();
   });
 
-  $routes->post('/kirjaudu_ulos', function() {
+  $routes->post('/kirjaudu_ulos', 'onko_kirjautunut', function() {
     KäyttäjäController::kirjaudu_ulos();
   });
 
@@ -56,15 +56,15 @@
     KäyttäjäController::näytä($id);
   });
 
-  $routes->post('/tuote/:id/poista', function($id){
+  $routes->post('/tuote/:id/poista', 'onko_kirjautunut', function($id){
     TuoteController::poista($id);
   });
 
-  $routes->post('/tarjous/:id/poista', function($id){
+  $routes->post('/tarjous/:id/poista', 'onko_kirjautunut', function($id){
     TarjousController::poista($id);
   });
 
-  $routes->post('/tarjous/:id/hyvaksy', function($id){
+  $routes->post('/tarjous/:id/hyvaksy', 'onko_kirjautunut', function($id){
     KaupatController::tallenna($id);
   });
 
@@ -80,6 +80,6 @@
     TarjousController::uusi($id);
   });
 
-  $routes->post('/tuote/:id/tarjous', function($id) {
+  $routes->post('/tuote/:id/tarjous', 'onko_kirjautunut', function($id) {
     TarjousController::tallenna($id);
   });

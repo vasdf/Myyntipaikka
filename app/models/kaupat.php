@@ -58,4 +58,16 @@
   	  return $kaupat;
   	}
 
+    public static function onko_tarjous_hyväksytty($id){
+      $query = DB::connection()->prepare('SELECT * FROM Kaupat WHERE tarjous_id = :id');
+      $query->execute(array('id' => $id));
+
+      $rivi = $query->fetchAll();
+
+      if($rivi){
+        return true;
+      } else {
+        return false;
+      }
+    }
   }

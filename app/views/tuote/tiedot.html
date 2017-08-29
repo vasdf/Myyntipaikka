@@ -17,7 +17,9 @@
         <th>Hintapyyntö</th>
         <th>Myyjä</th>
         <th>Lisäyspäivä</th>
+        {% if tuote.myynnissä == TRUE %}
         <th></th>
+        {% endif %}
       </tr>
     </thead>
 
@@ -27,11 +29,12 @@
         <td>{{tuote.hinta}}</td>
         <td><a href="{{base_path}}/profiili/{{myyjä.id}}">{{myyjä.nimi}}</a></td>
         <td>{{tuote.lisäyspäivä}}</td>
-        
+        {% if tuote.myynnissä == TRUE %}
         {% if user_logged_in.id == myyjä.id %}
           <th><a class="btn btn-warning btn-xs" href="{{base_path}}/tuote/{{tuote.id}}/muokkaa">Muokkaa</a> {{forms.poista_painike("#{base_path}/tuote/#{tuote.id}/poista")}}
         {% else %}
           <th><a class="btn btn-default btn-sm" href="{{base_path}}/tuote/{{tuote.id}}/tarjous">Tee tarjous</a></th>
+        {% endif %}
         {% endif %}
       </tr>
     </tbody>
