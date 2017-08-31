@@ -1,5 +1,4 @@
 <?php
-
   class Kaupat extends BaseModel{
 
   	public $id, $tarjous_id, $päivämäärä, $tarjous_hintatarjous, $tuote_kuvaus, $tarjous_lisätietoja, $tarjous_tuote_id, $tuote_myyjä_nimi;
@@ -17,9 +16,9 @@
   	  $this->id = $rivi['id'];
   	}
 
-  	public static function käyttäjän_ostamat_tuotteet($id){
+  	public static function käyttäjän_ostamat_tuotteet($käyttäjä_id){
   	  $query = DB::connection()->prepare('SELECT ta.hintatarjous, tu.kuvaus, k.päivämäärä, ta.lisätietoja, ta.tuote_id FROM Kaupat k INNER JOIN Tarjous ta ON k.tarjous_id = ta.id INNER JOIN Tuote tu ON ta.tuote_id = tu.id WHERE ta.ostaja_id = :id');
-  	  $query->execute(array('id' => $id));
+  	  $query->execute(array('id' => $käyttäjä_id));
 
   	  $rivit = $query->fetchAll();
   	  $kaupat = array();
@@ -37,9 +36,9 @@
   	  return $kaupat;
   	}
 
-  	public static function käyttäjän_myydyt_tuotteet($id){
+  	public static function käyttäjän_myydyt_tuotteet($käyttäjä_id){
   	  $query = DB::connection()->prepare('SELECT ta.hintatarjous, tu.kuvaus, k.päivämäärä, ta.lisätietoja, ta.tuote_id, kä.nimi FROM Kaupat k INNER JOIN Tarjous ta ON k.tarjous_id = ta.id INNER JOIN Tuote tu ON ta.tuote_id = tu.id INNER JOIN Käyttäjä kä ON tu.myyjä_id = kä.id WHERE tu.myyjä_id = :id');
-  	  $query->execute(array('id' => $id));
+  	  $query->execute(array('id' => $käyttäjä_id));
 
   	  $rivit = $query->fetchAll();
   	  $kaupat = array();

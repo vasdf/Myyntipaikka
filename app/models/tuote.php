@@ -121,7 +121,7 @@
     }
 
     /**
-     * Funktio poistaa Tuote olionm jolle funktiota kutsutiinm tietokannasta
+     * Funktio poistaa Tuote olion jolle funktiota kutsutiinm tietokannasta
      */
     public function poista(){
       $query = DB::connection()->prepare('DELETE FROM Tuote WHERE id = :id');
@@ -155,13 +155,14 @@
         $errors[] = 'Hinta ei voi olla tyhjä!';
       }
 
-      //Lisätään hintaan sentit jos niitä ei ole
+      //Lisätään hintaan sentit jos niitä ei ole validoinnin helpottamiseksi
       if(strpos($this->hinta, '.') == false){
         $this->hinta = $this->hinta . '.00';
       }
 
       $hinta_ilman_välipistettä = str_replace('.','', $this->hinta);
 
+      //Tarkistetaan ettei hinta sisällä muuta kuin numeroita
       if(preg_match('/\D/', $hinta_ilman_välipistettä)){
         $errors[] = 'Hinta saa koostua ainoastaan numeroista tai eurot ja sentit erottavasta pisteestä!';
         return $errors;
@@ -169,6 +170,7 @@
 
       $pituus_ilman_senttejä = strpos($this->hinta, '.');
 
+      //Tarkistetaan ettei senttejä merkitseviä numeroita ole liikaa
       if(strlen($this->hinta) > $pituus_ilman_senttejä + 3){
         $errors[] = 'Eurot ja sentit erottavan pisteen jälkeen ei saa olla muuta kuin 2 numeroa!';
       }

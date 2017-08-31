@@ -1,5 +1,8 @@
 <?php
-
+  
+  /**
+   * Luokka hallinnoi käyttäjien tekemiä tarjouksia muiden tuotteista
+   */
   class TarjousController extends BaseController{
 
   	public static function uusi($id) {
@@ -27,7 +30,7 @@
 
   		  Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('message' => 'Tarjous tehty tuotteesta!'));
       } else {
-        $tuote = TuoteController::haetuote($id);
+        $tuote = TuoteController::haetuote($tuote_id);
 
         View::make('tarjous/uusi.html', array('errors' => $errors, 'tarjous' => $tarjous, 'tuote' => $tuote));
       }
@@ -119,6 +122,10 @@
       }
     }
 
+    /**
+     * Funktio tarkistaa onko tarjous jo hyväksytty, poistettu tai jonkun muun käyttäjän,
+     * jolloin tarjousta ei saa muokata
+     */
     public static function tarkista_onko_muokkaus_sallittua($tarjous_id){
       if(KaupatController::onko_tarjous_hyväksytty($tarjous_id)){
         Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('error' => 'Tarjous, jota yritit muokata on jo hyväksytty!'));
@@ -135,7 +142,8 @@
     }
 
     /**
-     * Funktion tarkistaa onko tuotetta, josta ollaan tekemässä tarjousta, joko muokattu tai poistettu tietokannasta
+     * Funktion tarkistaa onko tuotetta, josta ollaan tekemässä tarjousta,
+     * joko muokattu tai poistettu tietokannasta
      */
     public static function tarkista_onko_tarjouksen_tekeminen_sallittua($tuote_id, $käyttäjän_tiedot_tuotteesta){
       $tuote_tietokannassa = TuoteController::haetuote($tuote_id);

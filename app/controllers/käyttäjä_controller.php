@@ -1,5 +1,7 @@
 <?php
-
+  /**
+   * Luokka hallinnoi käyttäjiin liittyviä toimintoja
+   */
   class KäyttäjäController extends BaseController{
 
   	public static function kirjaudu(){

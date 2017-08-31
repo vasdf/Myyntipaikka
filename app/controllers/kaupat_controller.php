@@ -1,5 +1,7 @@
 <?php
-
+  /**
+   * Luokka hallinnoi hyväksyttyjä tarjouksia eli kauppoja
+   */
   class KaupatController extends BaseController{
 
   	public static function tallenna($tarjous_id){
@@ -7,6 +9,7 @@
       	'tarjous_id' => $tarjous_id
       	));
 
+      //Tarkistut ettei samaa tarjousta hyväksy kahteen kertaan
       if(self::onko_tarjous_hyväksytty($tarjous_id)){
         Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('error' => 'Tarjous, jota yritit hyväksyä, on jo hyväksytty!'));
       }
@@ -14,7 +17,7 @@
 
       if(TarjousController::onko_tarjous_voimassa($tarjous_id)){
         
-        //seuraavat rivit tarkistavat ovatko käyttäjän näytöllä näkyvät tiedot tarjouksesta samat kuin tietokannassa olevat tiedot tarjouksesta (Voi olla eri jos tarjousta on muokattu ja käyttäjä ei ole päivittänyt sivuaan)
+        //Seuraavat rivit tarkistavat ovatko käyttäjän näytöllä näkyvät tiedot tarjouksesta samat kuin tietokannassa olevat tiedot tarjouksesta (Voi olla eri jos tarjousta on muokattu ja käyttäjä ei ole päivittänyt sivuaan)
         $tarjous_tiedot = $_POST;
         $tarjous_tietokannassa = TarjousController::hae_tarjous($tarjous_id);
 

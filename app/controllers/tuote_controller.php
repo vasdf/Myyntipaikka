@@ -1,5 +1,7 @@
 <?php
-
+  /**
+   * Luokka hallinnoin tuotteisiin liittyviä toimintoja
+   */
   class TuoteController extends BaseController{
 
     /**
@@ -36,6 +38,9 @@
       return $tuotteet;
     }
 
+    /**
+     * Funktio hakee yhden tuotteen tietokannasta ja palauttaa sen
+     */
     public static function haetuote($id){
       $tuote = Tuote::etsi($id);
 

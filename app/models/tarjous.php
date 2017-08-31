@@ -49,9 +49,9 @@
       $query->execute(array('hintatarjous' => $this->hintatarjous, 'lisatietoja' => $this->lisätietoja, 'id' => $this->id, 'voimassa' => $this->voimassa));
     }
 
-  	public static function käyttäjän_tekemät_tarjoukset($id){
+  	public static function käyttäjän_tekemät_tarjoukset($käyttäjä_id){
   		$query = DB::connection()->prepare('SELECT ta.id, ta.tuote_id, ta.ostaja_id, tu.kuvaus, ta.hintatarjous, ta.lisätietoja, ta.päivämäärä FROM Tarjous ta INNER JOIN Tuote tu ON ta.tuote_id = tu.id WHERE ostaja_id = :id AND ta.voimassa = TRUE');
-  		$query->execute(array('id' => $id));
+  		$query->execute(array('id' => $käyttäjä_id));
 
   		$rivit = $query->fetchAll();
   		$tarjoukset = array();
@@ -71,9 +71,9 @@
   		return $tarjoukset;
   	}
 
-  	public static function käyttäjälle_tehdyt_tarjoukset($id){
+  	public static function käyttäjälle_tehdyt_tarjoukset($käyttäjä_id){
   		$query = DB::connection()->prepare('SELECT ta.id, ta.tuote_id, ta.ostaja_id, tu.kuvaus, ta.hintatarjous, ta.lisätietoja, ta.päivämäärä, k.nimi, ta.voimassa FROM Tarjous ta INNER JOIN Tuote tu ON ta.tuote_id = tu.id INNER JOIN Käyttäjä k ON k.id = ta.ostaja_id WHERE tu.myyjä_id = :id AND ta.voimassa = TRUE');
-  		$query->execute(array('id' => $id));
+  		$query->execute(array('id' => $käyttäjä_id));
 
   		$rivit = $query->fetchAll();
   		$tarjoukset = array();
@@ -113,6 +113,9 @@
       return $ostaja_id;
     }
 
+    /**
+     * Funktio tarkistaa että annettu hintatarjous on oikeassa muodossa
+     */
     public function validate_hintatarjous(){
       $errors = array();
 
@@ -122,6 +125,7 @@
 
       $hintatarjous_ilman_välipistettä = str_replace('.','', $this->hintatarjous);
 
+      //Tarkistetaan että hintatarjous sisältää ainoastaan numeroita
       if(preg_match('/\D/', $hintatarjous_ilman_välipistettä)){
         $errors[] = 'Hintatarjous saa koostua ainoastaan numeroista tai eurot ja sentit erottavasta pisteestä!';
         return $errors;
@@ -134,6 +138,7 @@
 
       $pituus_ilman_senttejä = strpos($this->hintatarjous, '.');
 
+      //Tarkistetaan ettei senttejä merkitseviä numeroita ole liikaa
       if(strlen($this->hintatarjous) > $pituus_ilman_senttejä + 3){
         $errors[] = 'Eurot ja sentit erottavan pisteen jälkeen ei saa olla muuta kuin 2 numeroa!';
       }
