@@ -7,6 +7,10 @@
       	'tarjous_id' => $tarjous_id
       	));
 
+      if(self::onko_tarjous_hyväksytty($tarjous_id)){
+        Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('error' => 'Tarjous, jota yritit hyväksyä, on jo hyväksytty!'));
+      }
+
 
       if(TarjousController::onko_tarjous_voimassa($tarjous_id)){
         
@@ -38,10 +42,13 @@
 
   	public static function käyttäjän_myydyt_tuotteet($käyttäjä_id){
   	  return Kaupat::käyttäjän_myydyt_tuotteet($käyttäjä_id);
-
   	}
 
-    public static function onko_tarjous_hyväksytty($id){
-      return Kaupat::onko_tarjous_hyväksytty($id);
+    public static function onko_tarjous_hyväksytty($tarjous_id){
+      return Kaupat::onko_tarjous_hyväksytty($tarjous_id);
+    }
+
+    public static function onko_tuotteesta_tehty_kaupat($tuote_id){
+      return Kaupat::onko_tuotteesta_tehty_kaupat($tuote_id);
     }
   }

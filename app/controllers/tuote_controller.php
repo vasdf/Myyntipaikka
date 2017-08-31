@@ -87,7 +87,7 @@
 
       if ($_SESSION['käyttäjä'] != $myyjä_id){
 
-        Redirect::to('/', array('error' => 'Et voi muokata muiden tuotteita tai tuotetta ei ole olemassa'));
+        Redirect::to('/', array('error' => 'Et voi muokata muiden tuotteita tai tuotetta ei ole olemassa!'));
       }
 
 
@@ -101,6 +101,10 @@
      * joko kutsuu Tuote luokan päivitä funktiota tai pyytyää tietoja uudestaa ilmoittaen niiden virheistä
      */
     public static function päivitä($id){
+      if(KaupatController::onko_tuotteesta_tehty_kaupat($id)){
+      	Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('error' => 'Et voi muokata tuotetta, koska siitä on jo tehty kaupat!'));
+      }
+
       $tiedot = $_POST;
 
       $attributes = array(
@@ -131,6 +135,10 @@
      * Funktio kutsuu Tuote luokan funktiota poista halutulle tuotteelle
      */
     public static function poista($id){
+      if(KaupatController::onko_tuotteesta_tehty_kaupat($id)){
+      	Redirect::to('/profiili/' . $_SESSION['käyttäjä'], array('error' => 'Et voi poistaa tuotetta, koska siitä on jo tehty kaupat!'));
+      }
+
       TarjousController::poista_tarjoukset_tuotteelle($id);
 
       $tuote = new Tuote(array('id' => $id));

@@ -58,9 +58,22 @@
   	  return $kaupat;
   	}
 
-    public static function onko_tarjous_hyväksytty($id){
+    public static function onko_tarjous_hyväksytty($tarjous_id){
       $query = DB::connection()->prepare('SELECT * FROM Kaupat WHERE tarjous_id = :id');
-      $query->execute(array('id' => $id));
+      $query->execute(array('id' => $tarjous_id));
+
+      $rivi = $query->fetchAll();
+
+      if($rivi){
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    public static function onko_tuotteesta_tehty_kaupat($tuote_id){
+      $query = DB::connection()->prepare('SELECT * FROM Kaupat k INNER JOIN Tarjous t ON k.tarjous_id = t.id WHERE t.tuote_id = :id');
+      $query->execute(array('id' => $tuote_id));
 
       $rivi = $query->fetchAll();
 

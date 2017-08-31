@@ -17,7 +17,7 @@
   			'tuote_id' => $tuote_id,
   			'ostaja_id' => $_SESSION['käyttäjä'],
   			'hintatarjous' => $tiedot['hintatarjous'],
-  			'lisätietoja' => $tiedot['lisätietoja']
+  			'lisätietoja' => $tiedot['lisätietoja1']
   		));
 
       $errors = $tarjous->errors();
@@ -146,8 +146,8 @@
 
       if($käyttäjän_tiedot_tuotteesta['kuvaus'] != $tuote_tietokannassa->kuvaus || 
         $käyttäjän_tiedot_tuotteesta['hinta'] != $tuote_tietokannassa->hinta || 
-        $käyttäjän_tiedot_tuotteesta['lisätietoja'] != $tuote_tietokannassa->lisätietoja){
-        Redirect::to('/', array('error' => 'Tuotetta, josta olit tekemässä tarjousta, on muokattu!'));
+        $käyttäjän_tiedot_tuotteesta['lisätietoja2'] != $tuote_tietokannassa->lisätietoja){
+        Redirect::to('/', array('error' => 'Tuotetta, josta olit tekemässä tarjousta, on muokattu! Yritä uudestaan.'));
       }
     }
   }
